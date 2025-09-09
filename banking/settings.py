@@ -31,6 +31,7 @@ ALLOWED_HOSTS = []
 # Application definition
 
 INSTALLED_APPS = [
+    'authentication',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -78,7 +79,7 @@ DATABASES = {
         'HOST': 'localhost',
         'NAME': 'banking',
         'USER': 'postgres',
-        'PASSWORD': 'unicesmag',
+        'PASSWORD': 'postgres',
         'PORT': '5432',
     },
     
