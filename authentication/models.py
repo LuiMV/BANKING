@@ -1,5 +1,3 @@
-from django.db import models
-
 # Create your models here.
 from django.db import models
 
@@ -36,3 +34,10 @@ class Countries(models.Model):
     abrev = models.CharField(max_length = 20)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
+    status = models.BooleanField(default=True)
+    def __str__(self):
+        return f"{self.name} {self.abrev} {'Active' if self.status else 'Inactive'}"
+
+
+
+        

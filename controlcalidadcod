@@ -1,0 +1,74 @@
+import java.util.*;
+
+class Usuario {
+    String nombre;
+    String correo;
+    String password;
+    List<String> historial = new ArrayList<>();
+
+    Usuario(String nombre, String correo, String password) {
+        this.nombre = nombre;
+        this.correo = correo;
+        this.password = password;
+    }
+}
+
+class Libro {
+    String titulo;
+    String autor;
+    boolean disponible;
+
+    Libro(String titulo, String autor) {
+        this.titulo = titulo;
+        this.autor = autor;
+        this.disponible = true;
+    }
+}
+
+class Biblioteca {
+    List<Usuario> usuarios = new ArrayList<>();
+    List<Libro> libros = new ArrayList<>();
+
+    public Usuario registrarUsuario(String nombre, String correo, String password) {
+        Usuario u = new Usuario(nombre, correo, password);
+        usuarios.add(u);
+        return u;
+    }
+
+    public List<Libro> buscarLibro(String criterio) {
+        List<Libro> resultado = new ArrayList<>();
+        for (Libro l : libros) {
+            if (l.titulo.toLowerCase().contains(criterio.toLowerCase()) || 
+                l.autor.toLowerCase().contains(criterio.toLowerCase())) {
+                resultado.add(l);
+            }
+        }
+        return resultado;
+    }
+
+    public boolean prestarLibro(Usuario u, String titulo) {
+        for (Libro l : libros) {
+            if (l.titulo.equalsIgnoreCase(titulo) && l.disponible) {
+                l.disponible = false;
+                u.historial.add("Prestó: " + l.titulo);
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public boolean devolverLibro(Usuario u, String titulo) {
+        for (Libro l : libros) {
+            if (l.titulo.equalsIgnoreCase(titulo) && !l.disponible) {
+                l.disponible = true;
+                u.historial.add("Devolvió: " + l.titulo);
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public List<String> verHistorial(Usuario u) {
+        return u.historial;
+    }
+}

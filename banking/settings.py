@@ -11,6 +11,11 @@ https://docs.djangoproject.com/en/5.2/ref/settings/
 """
 
 from pathlib import Path
+from environs import Env
+
+#Start env variables
+env = Env()
+env.read_env()
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -69,18 +74,33 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'banking.wsgi.application'
 
+# Archivos estáticos (para desarrollo)
+STATIC_URL = '/static/'
+STATICFILES_DIRS = [BASE_DIR / 'static'] # carpeta para css/js
+STATIC_ROOT = BASE_DIR / 'staticfiles' # para collectstatic en producción
+
+
 
 # Database
 # https://docs.djangoproject.com/en/5.2/ref/settings/#databases
 
 DATABASES = {
-    'default': {
+    'local2': {
         'ENGINE': 'django.db.backends.postgresql',
-        'HOST': 'localhost',
-        'NAME': 'banking',
-        'USER': 'postgres',
-        'PASSWORD': 'postgres',
-        'PORT': '5432',
+        'HOST': env('DB_HOST', default = 'localhost'),
+        'NAME': env('DB_NAME'),
+        'USER': env('DB_USER'),
+        'PASSWORD': env('DB_PASSWORD'),
+        'PORT': env('DB_PORT'),
+    },
+
+    'default': {
+       'ENGINE': 'django.db.backends.postgresql',
+        'HOST': env('DF_HOST'),
+        'NAME': env('DF_NAME'),
+        'USER': env('DF_USER'),
+        'PASSWORD': env('DF_PASSWORD'),
+        'PORT': env('DF_PORT'),
     },
     
     'local': {
